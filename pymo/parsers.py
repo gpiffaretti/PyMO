@@ -72,17 +72,19 @@ class BVHParser():
         
         self.data = MocapData()
 
-
     def parse(self, filename):
         self.reset()
 
         with open(filename, 'r') as bvh_file:
             raw_contents = bvh_file.read()
+        return self.parse_string(raw_contents)
+
+    def parse_string(self, raw_contents):
         tokens, remainder = self.scanner.scan(raw_contents)
         self._parse_hierarchy(tokens)
         self.current_token = self.current_token + 1
         self._parse_motion(tokens)
-        
+
         self.data.skeleton = self._skeleton
         self.data.channel_names = self._motion_channels
         self.data.values = self._to_DataFrame()
@@ -90,7 +92,7 @@ class BVHParser():
         self.data.framerate = self.framerate
 
         return self.data
-    
+
     def _to_DataFrame(self):
         '''Returns all of the channels parsed from the file as a pandas DataFrame'''
 
