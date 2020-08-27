@@ -159,6 +159,11 @@ class MocapParameterizer(BaseEstimator, TransformerMixin):
 
         Q = []
         for track in X:
+
+            # fix track names
+            # adapt joint name so that it's equal for either male or female
+            
+
             channels = []
             titles = []
             euler_df = track.values

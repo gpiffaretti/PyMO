@@ -148,6 +148,8 @@ class BVHParser():
         joint_name = bvh[token_index][1]
         token_index = token_index + 1
         
+        joint_name = joint_name.replace("m_avg_", "").replace("f_avg_", "")
+
         parent_name = self._get_bone_context()
 
         if (joint_id == "End"):
@@ -191,6 +193,7 @@ class BVHParser():
             return None
 
         root_name = bvh[self.current_token][1]
+        root_name = root_name.replace("m_avg_", "").replace("f_avg_", "")
         root_bone = self._new_bone(None, root_name)
         self.current_token = self.current_token + 2 #skipping open brace
         offsets, self.current_token = self._read_offset(bvh, self.current_token)
